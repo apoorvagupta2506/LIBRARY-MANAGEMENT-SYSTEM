@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome | Library Management System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .welcome-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 50px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        .developer-info {
+            margin-top: 40px;
+            font-style: italic;
+        }
+
+        .name {
+            font-weight: bold;
+            color: #f1c40f; /* Gold color for the name */
+            font-size: 1.4rem;
+        }
+
+        /* Progress Bar */
+        .loader-container {
+            width: 100%;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .loader-fill {
+            height: 5px;
+            width: 0%;
+            background-color: #f1c40f;
+            border-radius: 10px;
+            transition: width 5s linear; /* Matches the redirect time */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body onload="startRedirect()">
+
+    <div class="welcome-container">
+        <h1>WELCOME</h1>
+        <div class="subtitle">TO LIBRARY MANAGEMENT SYSTEM</div>
+        
+        <div class="developer-info">
+            Developed by:<br>
+            <span class="name">APOORVA</span>
+        </div>
+
+        <div class="loader-container">
+            <div id="loader" class="loader-fill"></div>
+        </div>
+        <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.6;">Entering library...</p>
+    </div>
+
+    <script>
+        function startRedirect() {
+            // Animate the progress bar
+            setTimeout(() => {
+                document.getElementById('loader').style.width = '100%';
+            }, 100);
+
+            // Redirect after 5 seconds (5000 milliseconds)
+            setTimeout(function() {
+                window.location.href = "first.jsp";
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

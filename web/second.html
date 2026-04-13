@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LMS | Digital Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Instrument+Sans:wght@400;600&family=Satisfy&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-espresso: #1a120b;
+            --mocha: #3d2b1f;
+            --beige-paper: #f2ede4;
+            --gold: #c29c61;
+            --text-dark: #2c1e14;
+            --spine-width: 30px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--dark-espresso);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Instrument Sans', sans-serif;
+        }
+
+        /* 3D Stage */
+        .book-wrapper {
+            position: relative;
+            width: 900px;
+            height: 600px;
+            perspective: 2000px; /* Essential for the hinge effect */
+        }
+
+        .book-obj {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Sits straight-on (no slant) */
+        }
+
+        /* --- THE SPINE --- */
+        .book-spine {
+            position: absolute;
+            left: calc(50% - (var(--spine-width) / 2));
+            width: var(--spine-width);
+            height: 100%;
+            background: #2b1e15;
+            z-index: 5;
+            border-left: 1px solid var(--gold);
+            border-right: 1px solid var(--gold);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        /* --- THE EXTERIOR COVER --- */
+        .cover-front {
+            position: absolute;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: var(--mocha);
+            color: var(--beige-paper);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0 10px 10px 0;
+            border: 2px solid var(--gold);
+            transform-origin: left;
+            transition: transform 2.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+            box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+            backface-visibility: hidden;
+            padding: 40px;
+        }
+
+        /* Classical Hinge detail on the cover */
+        .cover-front::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 15px;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.4), transparent);
+        }
+
+        .cover-front h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            text-align: center;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--gold);
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+        }
+
+        .cover-front p {
+            letter-spacing: 5px;
+            font-size: 0.75rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* The Open State */
+        .book-obj.is-open .cover-front {
+            transform: rotateY(-170deg);
+        }
+
+        /* --- THE INTERNAL PAGES --- */
+        .page-base {
+            position: absolute;
+            width: 50%;
+            height: 98%;
+            top: 1%;
+            background: var(--beige-paper);
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left-page {
+            left: 0;
+            border-radius: 5px 0 0 5px;
+            border-right: 1px solid rgba(0,0,0,0.1);
+            text-align: center;
+            /* Stacked paper edge shadow */
+            box-shadow: -2px 0 0 #fff, -4px 0 0 #ddd, -6px 0 0 #fff, -10px 0 20px rgba(0,0,0,0.4);
+        }
+
+        .right-page {
+            right: 0;
+            border-radius: 0 5px 5px 0;
+            background: #fdfaf5;
+            text-align: center;
+            /* Stacked paper edge shadow */
+            box-shadow: 2px 0 0 #fff, 4px 0 0 #ddd, 6px 0 0 #fff, 10px 0 20px rgba(0,0,0,0.4);
+        }
+
+        /* Left Page: Updated Title Styling */
+        .main-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            margin-top: -30px; /* Offset to center text in the page */
+        }
+
+        /* Right Page Content */
+        .tagline {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--gold);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+        }
+
+        .btn-entry {
+            padding: 14px 35px;
+            background: var(--mocha);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: 0.3s;
+            border: 1px solid var(--gold);
+            border-radius: 2px;
+        }
+
+        .btn-entry:hover {
+            background: var(--gold);
+            color: var(--mocha);
+        }
+
+        .tanvi-tag {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            color: var(--gold);
+            font-size: 0.8rem;
+        }
+
+        .tanvi-tag span { font-family: 'Satisfy', cursive; color: var(--mocha); }
+
+    </style>
+</head>
+<body>
+
+    <div class="book-wrapper">
+        <div class="book-obj" id="mainBook">
+            
+            <div class="book-spine"></div>
+
+            <div class="cover-front">
+                <p>ARCHIVE</p>
+                <h1>LMS DIGITAL ARCHIVE</h1>
+                <p>EST. 2026</p>
+            </div>
+
+            <div class="page-base left-page">
+                <h1 class="main-title">Library Management System</h1>
+                <div style="width: 40px; height: 1px; background: var(--gold); margin: 0 auto 20px auto;"></div>
+                <p style="font-style: italic; color: #555; font-size: 1.1rem; font-family: 'Cormorant Garamond', serif;">
+                    "The journey of a thousand pages begins with a single click."
+                </p>
+            </div>
+
+            <div class="page-base right-page">
+                <div class="tagline">Authorization</div>
+                <h2>Ready to Begin?</h2>
+                <a href="third.html" class="btn-entry">PROCEED TO ADMIN MENU</a>
+                <div class="tanvi-tag">By: <span>APOORVA</span></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Auto-open logic
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('mainBook').classList.add('is-open');
+            }, 1000); // Opens after 1s
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS | Inventory Ledger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --dark-espresso: #1a120b; 
+            --mocha: #3d2b1f; 
+            --beige-paper: #f2ede4; 
+            --gold: #c29c61; 
+            --text-dark: #2c1e14; 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { 
+            background-color: var(--dark-espresso); 
+            min-height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-family: 'Instrument Sans', sans-serif; 
+            padding: 20px;
+        }
+
+        .container-card { 
+            width: 100%;
+            max-width: 1050px; 
+            background: var(--beige-paper); 
+            border-radius: 12px; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5); 
+            border: 1px solid var(--gold); 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-section { 
+            background: var(--mocha); 
+            padding: 30px; 
+            text-align: center; 
+            border-bottom: 3px solid var(--gold);
+            position: relative;
+        }
+
+        .header-section h1 { 
+            font-family: 'Cormorant Garamond', serif; 
+            color: var(--beige-paper); 
+            font-size: 2.4rem; 
+            text-transform: uppercase; 
+            letter-spacing: 3px;
+        }
+
+        .table-wrapper {
+            padding: 40px;
+            background: var(--beige-paper);
+            max-height: 550px;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        thead th {
+            background: var(--mocha);
+            color: var(--gold);
+            font-family: 'Cormorant Garamond', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 18px 15px;
+            font-size: 1.1rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        tbody td {
+            padding: 16px 15px;
+            border-bottom: 1px solid rgba(61, 43, 31, 0.1);
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        tbody tr:hover td {
+            background: rgba(194, 156, 97, 0.08);
+            transition: 0.2s;
+        }
+
+        .stock-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            background: var(--mocha);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+        }
+
+        .footer-actions { 
+            padding: 20px 40px 40px;
+            display: flex; 
+            justify-content: center; 
+            background: var(--beige-paper);
+        }
+
+        .btn-back { 
+            padding: 12px 45px;
+            background: transparent; 
+            color: var(--mocha); 
+            border: 2px solid var(--mocha); 
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .btn-back:hover {
+            background: var(--mocha);
+            color: var(--beige-paper);
+            transform: translateY(-2px);
+        }
+
+        /* Custom Scrollbar for the Table */
+        .table-wrapper::-webkit-scrollbar { width: 8px; }
+        .table-wrapper::-webkit-scrollbar-track { background: var(--beige-paper); }
+        .table-wrapper::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <div class="container-card">
+        <div class="header-section">
+            <h1>Display All Books</h1>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Book Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Total Stock</th>
+                        <th>Available</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Atomic Habits</strong></td>
+                        <td>James Clear</td>
+                        <td>Avery</td>
+                        <td>25</td>
+                        <td><span class="stock-badge">18</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>The Great Gatsby</strong></td>
+                        <td>F. Scott Fitzgerald</td>
+                        <td>Scribner</td>
+                        <td>15</td>
+                        <td><span class="stock-badge">04</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Clean Code</strong></td>
+                        <td>Robert C. Martin</td>
+                        <td>Pearson</td>
+                        <td>10</td>
+                        <td><span class="stock-badge">07</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer-actions">
+            <a href="third.html" class="btn-back">Back to Dashboard</a>
+        </div>
+    </div>
+
+</body>
+</html>
